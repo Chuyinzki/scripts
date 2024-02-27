@@ -1,0 +1,1 @@
+Parse Fitbit exercise data for Spinning summary. Gather these files by downloading data from fitbit or, in case they don't provide all the files (as they did in my case), create/register Fitbit dev app to download data using API calls.
