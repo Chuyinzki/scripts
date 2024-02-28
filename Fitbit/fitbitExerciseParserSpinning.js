@@ -24,6 +24,8 @@ fs.readdir(currentDirectory, (err, files) => {
     var count2024 = 0;
 
     let strings = [];
+    let duplicatesMap = {};
+    var duplicatesCount = 0;
 
     console.log('Exercise files found:');
     exerciseFiles.forEach(file => {
@@ -44,12 +46,18 @@ fs.readdir(currentDirectory, (err, files) => {
                         // console.log("Skipping not spinning");
                         return;
                     }
+                    if(duplicatesMap[object.logId] != null){
+                        console.log("Duplicate found!");
+                        duplicatesCount++;
+                        return;
+                    }
+                    duplicatesMap[object.logId] = object;
                     // console.log("Processing spinning");
                     const curMinutes = object.activeDuration/60000
                     minutes += curMinutes;
                     count++;
-                    console.log("Duration in minutes: ", curMinutes);
-                    console.log(date);
+                    // console.log("Duration in minutes: ", curMinutes);
+                    // console.log(date);
                     if(date.getFullYear() == "2022"){
                         year2022Minutes+=curMinutes;
                         count2022++;
@@ -72,6 +80,7 @@ fs.readdir(currentDirectory, (err, files) => {
             console.log("Hours of spinning: ", minutes/60);
             console.log("HOURS 2022: %s, 2023: %s, 2024: %s", year2022Minutes/60, year2023Minutes/60, year2024Minutes/60);
             console.log("EXERCISE COUNTS 2022: %s, 2023: %s, 2024: %s", count2022, count2023, count2024);
+            console.log("Duplicates: ", duplicatesCount);
             strings.sort();
             strings.forEach(item => {
                 // console.log(item);
